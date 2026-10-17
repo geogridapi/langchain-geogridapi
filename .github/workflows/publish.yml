@@ -1,0 +1,23 @@
+# Publishes to PyPI with Trusted Publishing (no token) on every version tag (v0.1.0, v1.2.3…).
+name: Publish
+
+on:
+  push:
+    tags: ["v*.*.*"]
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: pypi
+    permissions:
+      contents: read
+      id-token: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v6
+      - run: uv sync
+      - run: uv run pytest
+      - name: Check the tag matches the package version
+        run: test "v$(uv run python -c 'import langchain_geogridapi; print(langchain_geogridapi.__version__)')" = "$GITHUB_REF_NAME"
+      - run: uv build
+      - uses: pypa/gh-action-pypi-publish@release/v1

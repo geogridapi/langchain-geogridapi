@@ -1,0 +1,68 @@
+[build-system]
+requires = ["hatchling>=1.27"]
+build-backend = "hatchling.build"
+
+[project]
+name = "langchain-geogridapi"
+dynamic = ["version"]
+description = "LangChain tools for GeoGridAPI: let an AI agent measure Google Maps local rankings (geo-grid rank tracking for local SEO), find competitors ahead and follow trends."
+readme = "README.md"
+license = "MIT"
+license-files = ["LICENSE"]
+requires-python = ">=3.10"
+authors = [{ name = "GeoGridAPI", email = "sav@localnord.fr" }]
+keywords = [
+  "langchain",
+  "langgraph",
+  "ai agents",
+  "tools",
+  "geogridapi",
+  "geogrid",
+  "local seo",
+  "google maps",
+  "rank tracker",
+  "google business profile",
+]
+classifiers = [
+  "Development Status :: 4 - Beta",
+  "Intended Audience :: Developers",
+  "Operating System :: OS Independent",
+  "Programming Language :: Python :: 3",
+  "Programming Language :: Python :: 3 :: Only",
+  "Topic :: Scientific/Engineering :: Artificial Intelligence",
+  "Typing :: Typed",
+]
+dependencies = ["geogridapi>=0.1.0,<1", "langchain-core>=0.3.0,<2"]
+
+[project.urls]
+Homepage = "https://geogridapi.io"
+Documentation = "https://geogridapi.io/en/docs"
+Repository = "https://github.com/geogridapi/langchain-geogridapi"
+Issues = "https://github.com/geogridapi/langchain-geogridapi/issues"
+
+[dependency-groups]
+dev = ["pytest>=8", "langchain-tests>=1.0", "mypy>=1.11", "ruff>=0.6"]
+
+[tool.hatch.version]
+path = "langchain_geogridapi/_version.py"
+
+[tool.hatch.build.targets.wheel]
+packages = ["langchain_geogridapi"]
+
+[tool.hatch.build.targets.sdist]
+exclude = [".github", "uv.lock"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 120
+target-version = "py310"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "UP", "B"]
+
+[tool.mypy]
+strict = true
+files = ["langchain_geogridapi"]
+plugins = ["pydantic.mypy"]
